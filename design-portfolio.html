@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obinna Egenti | Design Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─── */
+:root {
+  --orange:   #E84B13;
+  --orange-h: #C93D0A;
+  --orange-dim: rgba(232,75,19,0.1);
+  --green:    #22C55E;
+  --bg:       #F7F6F3;
+  --bg2:      #EEECE7;
+  --surface:  #FFFFFF;
+  --border:   #E2E0DA;
+  --text:     #111110;
+  --muted:    #6B6860;
+  --faint:    #B0ADA8;
+}
+[data-theme="dark"] {
+  --bg:       #0C0C0C;
+  --bg2:      #141414;
+  --surface:  #1A1A1A;
+  --border:   #2A2A2A;
+  --text:     #F0EDE8;
+  --muted:    #9A9690;
+  --faint:    #504C48;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Manrope',sans-serif;font-weight:400;font-size:16px;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{cursor:pointer;background:none;border:none;font-family:inherit}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;height:66px;
+  transition:background .3s,box-shadow .3s;
+}
+nav.scrolled{
+  background:rgba(247,246,243,0.95);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  box-shadow:0 1px 0 var(--border);
+}
+[data-theme="dark"] nav.scrolled{
+  background:rgba(12,12,12,0.95);
+}
+.nav-logo{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:1.5rem;font-weight:800;
+  letter-spacing:-.025em;color:var(--text);
+}
+.nav-logo em{color:var(--orange);font-style:normal}
+.nav-right-group{display:flex;align-items:center;gap:10px}
+.nav-back{
+  padding:7px 16px;border-radius:100px;
+  border:1.5px solid var(--border);background:var(--surface);
+  font-size:.72rem;font-weight:700;color:var(--muted);
+  transition:all .2s;
+}
+.nav-back:hover{border-color:var(--orange);color:var(--orange)}
+.theme-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:100px;
+  border:1.5px solid var(--border);background:var(--surface);
+  font-size:.72rem;font-weight:700;color:var(--muted);
+  transition:all .2s;
+}
+.theme-btn:hover{border-color:var(--text);color:var(--text)}
+.nav-hire{
+  padding:9px 22px;border-radius:100px;
+  background:var(--text);color:var(--bg) !important;
+  font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  transition:background .2s,transform .2s;display:inline-block;
+}
+.nav-hire:hover{background:var(--orange);transform:translateY(-1px)}
+
+/* ─── HAMBURGER ─── */
+.hamburger{display:none;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mob-menu{
+  display:none;position:fixed;inset:0;
+  background:var(--bg);z-index:199;
+  flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+}
+.mob-menu.open{display:flex}
+.mob-menu a{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:2.6rem;font-weight:800;color:var(--muted);transition:color .2s;
+}
+.mob-menu a:hover{color:var(--orange)}
+
+/* ─── HERO ─── */
+#hero{
+  min-height:62vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:120px 5% 80px;
+  position:relative;overflow:hidden;
+  border-bottom:1.5px solid var(--border);
+}
+.hero-label{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 16px;border-radius:100px;
+  border:1.5px solid var(--border);background:var(--surface);
+  font-size:.68rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:32px;width:fit-content;
+  animation:fadeUp .5s ease both;
+}
+.hero-label-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--orange);flex-shrink:0;
+}
+.hero-heading{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:clamp(48px,7vw,96px);
+  font-weight:800;line-height:.93;
+  letter-spacing:-.03em;color:var(--text);
+  margin-bottom:20px;max-width:900px;
+  animation:fadeUp .6s .1s ease both;
+}
+.hero-heading em{color:var(--orange);font-style:normal}
+.hero-sub{
+  font-size:1.05rem;line-height:1.8;color:var(--muted);
+  max-width:600px;margin-bottom:40px;
+  animation:fadeUp .6s .2s ease both;
+}
+.hero-meta{
+  display:flex;gap:40px;flex-wrap:wrap;
+  padding-top:32px;border-top:1.5px solid var(--border);
+  animation:fadeUp .6s .28s ease both;
+}
+.hmeta{display:flex;flex-direction:column;gap:4px}
+.hmeta-num{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:2rem;font-weight:800;color:var(--text);line-height:1;
+}
+.hmeta-num span{color:var(--orange)}
+.hmeta-lbl{font-size:.63rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+
+/* ─── MARQUEE ─── */
+.marquee-wrap{
+  overflow:hidden;
+  border-top:1.5px solid var(--border);
+  border-bottom:1.5px solid var(--border);
+  background:var(--bg2);padding:14px 0;
+}
+.marquee-track{
+  display:flex;white-space:nowrap;
+  animation:marquee 24s linear infinite;
+}
+.m-item{
+  display:inline-flex;align-items:center;gap:14px;
+  padding:0 24px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;font-weight:500;
+  color:var(--faint);text-transform:uppercase;letter-spacing:.14em;flex-shrink:0;
+}
+.m-dot{width:4px;height:4px;border-radius:50%;background:var(--orange);display:inline-block}
+
+/* ─── SECTION WRAPPER ─── */
+section{padding:100px 5%}
+.sec-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
+}
+.sec-label::before{content:'';width:24px;height:1.5px;background:var(--orange)}
+.sec-title{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800;color:var(--text);
+  line-height:1.0;letter-spacing:-.028em;
+  margin-bottom:56px;
+}
+
+/* ─── FILTER TABS ─── */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:48px}
+.ftab{
+  padding:9px 22px;border-radius:100px;
+  border:1.5px solid var(--border);background:var(--surface);
+  font-size:.72rem;font-weight:700;
+  color:var(--muted);letter-spacing:.06em;text-transform:uppercase;
+  transition:all .2s;
+}
+.ftab:hover{border-color:var(--text);color:var(--text)}
+.ftab.active{background:var(--text);border-color:var(--text);color:var(--bg)}
+
+/* ─── DESIGN GRID ─── */
+#design{background:var(--bg)}
+.design-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.ds-card{
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+  cursor:pointer;
+  position:relative;
+}
+.ds-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 56px rgba(0,0,0,.08);
+  border-color:var(--orange);
+}
+[data-theme="dark"] .ds-card:hover{
+  box-shadow:0 20px 56px rgba(0,0,0,.4);
+}
+.ds-card.wide{grid-column:span 2}
+.ds-card.tall{grid-row:span 2}
+
+/* Mosaic preview inside card */
+.ds-mosaic{
+  display:grid;
+  height:220px;overflow:hidden;position:relative;
+}
+.ds-mosaic.one img{width:100%;height:220px;object-fit:cover;transition:transform .4s}
+.ds-mosaic.two{grid-template-columns:1fr 1fr}
+.ds-mosaic.two img{width:100%;height:220px;object-fit:cover;transition:transform .4s}
+.ds-mosaic.three{grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr}
+.ds-mosaic.three img:first-child{grid-row:span 2;width:100%;height:220px;object-fit:cover;transition:transform .4s}
+.ds-mosaic.three img:not(:first-child){width:100%;height:110px;object-fit:cover;transition:transform .4s}
+.ds-card:hover .ds-mosaic img{transform:scale(1.03)}
+
+/* Hover overlay on mosaic */
+.ds-mosaic::after{
+  content:'View Project →';
+  position:absolute;inset:0;
+  background:rgba(17,17,16,0.55);
+  color:#fff;
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:1.1rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .25s;
+  letter-spacing:-.01em;
+}
+.ds-card:hover .ds-mosaic::after{opacity:1}
+
+.ds-body{padding:20px 22px 22px}
+.ds-scope{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;font-weight:500;
+  color:var(--orange);letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:6px;
+}
+.ds-name{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:1.15rem;font-weight:800;
+  letter-spacing:-.015em;color:var(--text);margin-bottom:8px;
+}
+.ds-desc{font-size:.82rem;line-height:1.7;color:var(--muted);margin-bottom:16px}
+.ds-tags{display:flex;flex-wrap:wrap;gap:6px}
+.dtag{
+  padding:4px 10px;border-radius:100px;
+  border:1px solid var(--border);background:var(--bg2);
+  font-size:.65rem;font-weight:700;color:var(--muted);
+  letter-spacing:.04em;
+}
+
+/* ─── SIDE PANEL ─── */
+.side-panel{
+  position:fixed;top:0;right:0;bottom:0;
+  width:min(640px,100vw);
+  background:var(--surface);
+  border-left:1.5px solid var(--border);
+  z-index:300;
+  overflow-y:auto;
+  transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  -webkit-overflow-scrolling:touch;
+}
+.side-panel.open{transform:translateX(0)}
+.panel-overlay{
+  position:fixed;inset:0;z-index:299;
+  background:rgba(0,0,0,0);
+  pointer-events:none;
+  transition:background .35s;
+}
+.panel-overlay.active{
+  background:rgba(0,0,0,0.35);
+  pointer-events:all;
+}
+.panel-inner{padding:40px 40px 80px}
+.panel-back{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.78rem;font-weight:700;color:var(--muted);
+  margin-bottom:32px;padding:8px 16px;
+  border:1.5px solid var(--border);border-radius:100px;
+  background:var(--bg2);transition:all .2s;
+}
+.panel-back:hover{color:var(--orange);border-color:var(--orange)}
+
+.panel-lbl{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;font-weight:500;
+  color:var(--orange);letter-spacing:.14em;
+  text-transform:uppercase;margin-bottom:10px;
+}
+.panel-title{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:clamp(1.8rem,3.5vw,2.6rem);
+  font-weight:800;line-height:1.05;
+  letter-spacing:-.025em;color:var(--text);
+  margin-bottom:28px;
+}
+.panel-h3{
+  font-size:.78rem;font-weight:700;
+  color:var(--text);letter-spacing:.06em;text-transform:uppercase;
+  margin:28px 0 10px;
+}
+.panel-p{font-size:.9rem;line-height:1.85;color:var(--muted);margin-bottom:14px}
+.panel-p strong{color:var(--text);font-weight:700}
+.panel-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.ptag{
+  padding:5px 12px;border-radius:100px;
+  border:1.5px solid var(--border);background:var(--bg2);
+  font-size:.68rem;font-weight:700;color:var(--muted);
+}
+
+/* Panel image grid */
+.cs-panel-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;margin:20px 0;
+}
+.cpi{border-radius:14px;overflow:hidden;background:var(--bg2)}
+.cpi img{width:100%;height:100%;object-fit:cover;display:block}
+.cpi.wide{grid-column:span 2}
+.cpi.solo{grid-column:span 2;max-height:400px}
+.cpi.solo img{max-height:400px;object-fit:contain;background:var(--bg2)}
+
+/* Stats row */
+.panel-stats{
+  display:flex;gap:24px;flex-wrap:wrap;
+  padding:20px 0;margin:16px 0;
+  border-top:1.5px solid var(--border);
+  border-bottom:1.5px solid var(--border);
+}
+.ps-num{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:2rem;font-weight:800;color:var(--text);line-height:1;
+}
+.ps-num span{color:var(--orange)}
+.ps-lbl{font-size:.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+
+/* ─── ABOUT STRIP ─── */
+#about-strip{
+  background:var(--bg2);
+  border-top:1.5px solid var(--border);
+  border-bottom:1.5px solid var(--border);
+  padding:80px 5%;
+}
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:80px;align-items:start}
+.about-text p{font-size:1rem;line-height:2;color:var(--muted);margin-bottom:18px}
+.about-text p strong{color:var(--text);font-weight:700}
+.tools-grid{display:flex;flex-direction:column;gap:0}
+.tool-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 0;border-bottom:1.5px solid var(--border);
+}
+.tool-row:first-child{border-top:1.5px solid var(--border)}
+.tool-name{font-size:.88rem;font-weight:700;color:var(--text)}
+.tool-use{font-size:.75rem;color:var(--muted)}
+
+/* ─── CTA ─── */
+#cta{
+  background:var(--text);
+  padding:100px 5%;text-align:center;
+}
+.cta-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;font-weight:500;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--orange);margin-bottom:20px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.cta-label::before,.cta-label::after{content:'';width:24px;height:1.5px;background:var(--orange)}
+.cta-heading{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:clamp(2.5rem,6vw,5rem);font-weight:800;
+  line-height:.93;letter-spacing:-.03em;color:var(--bg);
+  margin-bottom:20px;
+}
+.cta-heading em{color:var(--orange);font-style:normal}
+.cta-sub{font-size:1rem;color:rgba(247,246,243,.55);margin-bottom:44px;line-height:1.7}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{
+  padding:14px 32px;border-radius:100px;
+  background:var(--orange);color:#fff !important;
+  font-size:.85rem;font-weight:700;border:2px solid var(--orange);
+  transition:background .2s,transform .2s,box-shadow .2s;display:inline-block;
+}
+.btn-primary:hover{background:var(--orange-h);transform:translateY(-2px);box-shadow:0 12px 32px rgba(232,75,19,.35)}
+.btn-secondary-inv{
+  padding:14px 32px;border-radius:100px;
+  color:var(--bg) !important;font-size:.85rem;font-weight:700;
+  border:2px solid rgba(247,246,243,.2);background:transparent;
+  transition:border-color .2s,transform .2s;display:inline-block;
+}
+.btn-secondary-inv:hover{border-color:rgba(247,246,243,.6);transform:translateY(-2px)}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--bg2);border-top:1.5px solid var(--border);
+  padding:40px 5%;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;
+}
+.footer-logo{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:1.3rem;font-weight:800;color:var(--text);
+}
+.footer-logo em{color:var(--orange);font-style:normal}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap}
+.footer-links a{font-size:.8rem;font-weight:600;color:var(--muted);transition:color .2s}
+.footer-links a:hover{color:var(--orange)}
+.footer-copy{font-size:.72rem;color:var(--faint)}
+
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal.from-left{transform:translateX(-28px)}
+.reveal.from-right{transform:translateX(28px)}
+.reveal.from-left.visible,.reveal.from-right.visible{transform:none}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:960px){
+  .design-grid{grid-template-columns:1fr 1fr}
+  .ds-card.wide{grid-column:span 2}
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  .nav-back,.theme-btn,.nav-hire{display:none}
+  .hamburger{display:flex}
+  nav .nav-logo{font-size:1.25rem}
+}
+@media(max-width:600px){
+  .design-grid{grid-template-columns:1fr}
+  .ds-card.wide{grid-column:span 1}
+  .hero-meta{gap:24px}
+  .panel-inner{padding:28px 20px 60px}
+  .cs-panel-grid{grid-template-columns:1fr}
+  .cpi.wide{grid-column:span 1}
+  .panel-stats{gap:16px}
+  footer{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div class="panel-overlay" id="overlay" onclick="closePanel()"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="https://obinna18.github.io" class="nav-logo">OE<em>.</em></a>
+  <div class="nav-right-group">
+    <a href="https://obinna18.github.io" class="nav-back">← Main Portfolio</a>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">Dark</button>
+    <a href="mailto:preciousobinna260@gmail.com" class="nav-hire">Hire Me</a>
+  </div>
+  <button class="hamburger" id="ham" onclick="toggleMob()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <a href="https://obinna18.github.io" onclick="toggleMob()">Portfolio</a>
+  <a href="mailto:preciousobinna260@gmail.com" onclick="toggleMob()">Hire Me</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-label">
+    <span class="hero-label-dot"></span>
+    Graphic Design Portfolio
+  </div>
+  <h1 class="hero-heading">Design work that<br><em>moves people.</em></h1>
+  <p class="hero-sub">Brand identity, campaign systems, and product advertising built for real clients and real audiences. From student communities at FUPRE to independent businesses in Lagos.</p>
+  <div class="hero-meta">
+    <div class="hmeta">
+      <div class="hmeta-num">20<span>+</span></div>
+      <div class="hmeta-lbl">Pieces Delivered</div>
+    </div>
+    <div class="hmeta">
+      <div class="hmeta-num">4<span>+</span></div>
+      <div class="hmeta-lbl">Clients Served</div>
+    </div>
+    <div class="hmeta">
+      <div class="hmeta-num">3<span>+</span></div>
+      <div class="hmeta-lbl">Campaign Systems</div>
+    </div>
+    <div class="hmeta">
+      <div class="hmeta-num">2<span>+</span></div>
+      <div class="hmeta-lbl">Tools Mastered</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="m-item">Campaign Design<span class="m-dot"></span></span>
+    <span class="m-item">Brand Identity<span class="m-dot"></span></span>
+    <span class="m-item">Social Media Graphics<span class="m-dot"></span></span>
+    <span class="m-item">Product Advertising<span class="m-dot"></span></span>
+    <span class="m-item">Adobe Illustrator<span class="m-dot"></span></span>
+    <span class="m-item">Canva<span class="m-dot"></span></span>
+    <span class="m-item">Visual Identity<span class="m-dot"></span></span>
+    <span class="m-item">Multi-Phase Campaigns<span class="m-dot"></span></span>
+    <span class="m-item">Infographic Design<span class="m-dot"></span></span>
+    <span class="m-item">Campaign Design<span class="m-dot"></span></span>
+    <span class="m-item">Brand Identity<span class="m-dot"></span></span>
+    <span class="m-item">Social Media Graphics<span class="m-dot"></span></span>
+    <span class="m-item">Product Advertising<span class="m-dot"></span></span>
+    <span class="m-item">Adobe Illustrator<span class="m-dot"></span></span>
+    <span class="m-item">Canva<span class="m-dot"></span></span>
+    <span class="m-item">Visual Identity<span class="m-dot"></span></span>
+    <span class="m-item">Multi-Phase Campaigns<span class="m-dot"></span></span>
+    <span class="m-item">Infographic Design<span class="m-dot"></span></span>
+  </div>
+</div>
+
+<!-- WORK SECTION -->
+<section id="design">
+  <div class="sec-label">Selected Work</div>
+  <h2 class="sec-title">Design projects</h2>
+
+  <!-- Filter Tabs -->
+  <div class="filter-bar">
+    <button class="ftab active" onclick="filterWork('all',this)">All Work</button>
+    <button class="ftab" onclick="filterWork('campaign',this)">Campaigns</button>
+    <button class="ftab" onclick="filterWork('brand',this)">Brand Identity</button>
+    <button class="ftab" onclick="filterWork('social',this)">Social Media</button>
+    <button class="ftab" onclick="filterWork('product',this)">Product Ads</button>
+  </div>
+
+  <div class="design-grid" id="designGrid">
+
+    <!-- Solutions In Me -->
+    <div class="ds-card wide reveal from-bottom" data-cat="campaign" onclick="openPanel('sim')">
+      <div class="ds-mosaic three">
+        <img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-cover.jpg" alt="Solutions In Me Cover" onerror="this.src='https://placehold.co/600x400/003366/ffffff?text=SIM+Cover'">
+        <img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-identify.jpg" alt="Identify a Problem" onerror="this.src='https://placehold.co/300x200/FF6600/ffffff?text=Identify'">
+        <img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-submission.jpg" alt="Submission Flyer" onerror="this.src='https://placehold.co/300x200/003366/ffffff?text=Submission'">
+      </div>
+      <div class="ds-body">
+        <div class="ds-scope">Solutions In Me · FUPRE Edition · Volunteer Designer</div>
+        <div class="ds-name">Solutions In Me Campaign</div>
+        <p class="ds-desc">Full multi-phase campaign for a FUPRE student innovation challenge. 9 flyers across 4 phases under a unified brand system, with a torn-edge navy motif and ₦45k prize pool announcement reaching the entire student body.</p>
+        <div class="ds-tags">
+          <span class="dtag">Campaign Design</span>
+          <span class="dtag">Multi-Phase</span>
+          <span class="dtag">Brand System</span>
+          <span class="dtag">Canva</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DLCF -->
+    <div class="ds-card reveal from-right" data-cat="social campaign" onclick="openPanel('dlcf')">
+      <div class="ds-mosaic two">
+        <img src="https://raw.githubusercontent.com/obinna18/Design/main/dlcf-stay-grounded.jpg" alt="Stay Grounded" onerror="this.src='https://placehold.co/300x200/1a1a2e/e94b13?text=DLCF+Stay+Grounded'">
+        <img src="https://raw.githubusercontent.com/obinna18/Design/main/dlcf-academic-faq.jpg" alt="Academic FAQ" onerror="this.src='https://placehold.co/300x200/f59e0b/1a1a1a?text=Academic+FAQ'">
+      </div>
+      <div class="ds-body">
+        <div class="ds-scope">DLCF FUPRE · Academic Unit Designer</div>
+        <div class="ds-name">DLCF Design System</div>
+        <p class="ds-desc">Recurring content system for DLCF's academic unit: motivation campaigns, checklists, FAQ series, and quote cards, all with a consistent visual identity that stops the scroll without feeling preachy.</p>
+        <div class="ds-tags">
+          <span class="dtag">Social Media</span>
+          <span class="dtag">Infographic</span>
+          <span class="dtag">Canva</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DSN -->
+    <div class="ds-card reveal from-bottom" data-cat="campaign social" onclick="openPanel('dsn')">
+      <div class="ds-mosaic one">
+        <img src="https://raw.githubusercontent.com/obinna18/Design/main/dsn-harness-the-holiday.webp" alt="DSN Harness the Holiday" onerror="this.src='https://placehold.co/600x300/006400/ffffff?text=DSN+Holiday+Campaign'">
+      </div>
+      <div class="ds-body">
+        <div class="ds-scope">DSN FUPRE · Chapter Lead</div>
+        <div class="ds-name">DSN Holiday Campaign</div>
+        <p class="ds-desc">Recruitment and engagement campaign for the Data Scientists Network chapter at FUPRE. Built to keep members active during semester breaks and drive WhatsApp group joins through a QR code CTA.</p>
+        <div class="ds-tags">
+          <span class="dtag">Recruitment</span>
+          <span class="dtag">Campaign</span>
+          <span class="dtag">Canva</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AeroPure -->
+    <div class="ds-card reveal from-bottom" data-cat="product brand" onclick="openPanel('aeropure')">
+      <div class="ds-mosaic one">
+        <img src="https://raw.githubusercontent.com/obinna18/Design/main/aeropure-mini-launch-ad.jpg" alt="AeroPure Mini Launch Ad" onerror="this.src='https://placehold.co/600x300/0d9488/ffffff?text=AeroPure+Mini+Ad'">
+      </div>
+      <div class="ds-body">
+        <div class="ds-scope">Freelance · Independent Client</div>
+        <div class="ds-name">AeroPure Mini Launch Ad</div>
+        <p class="ds-desc">Product launch ad for a smart air purifier. Teal palette, three-column feature callouts, lung illustration overlay, and an urgency-driven CTA, built for Instagram and print distribution.</p>
+        <div class="ds-tags">
+          <span class="dtag">Product Ad</span>
+          <span class="dtag">Adobe Illustrator</span>
+          <span class="dtag">Print</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vina Beaute -->
+    <div class="ds-card reveal from-right" data-cat="brand product" onclick="openPanel('vina')">
+      <div class="ds-mosaic one">
+        <img src="https://raw.githubusercontent.com/obinna18/Design/main/vina-beaute%20(1).webp" alt="Vina Beaute Brand Flyer" onerror="this.src='https://placehold.co/600x300/c9a96e/1a1a1a?text=Vina+Beauté'">
+      </div>
+      <div class="ds-body">
+        <div class="ds-scope">Freelance · Lagos Beauty Studio</div>
+        <div class="ds-name">Vina Beauté Brand Flyer</div>
+        <p class="ds-desc">Brand launch flyer for a Victoria Island beauty studio. Warm gold and rose tones, bold serif display type, frosted service-listing overlay, and a high-impact model photograph, designed for Instagram and WhatsApp.</p>
+        <div class="ds-tags">
+          <span class="dtag">Brand Identity</span>
+          <span class="dtag">Canva</span>
+          <span class="dtag">Beauty</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIM Extended -->
+    <div class="ds-card wide reveal from-bottom" data-cat="campaign" onclick="openPanel('sim2')">
+      <div class="ds-mosaic three">
+        <img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-innovator.jpg" alt="Innovator Series" onerror="this.src='https://placehold.co/400x300/003366/FF6600?text=Innovator'">
+        <img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-anticipate.jpg" alt="Anticipate" onerror="this.src='https://placehold.co/300x150/FF6600/ffffff?text=Anticipate'">
+        <img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-frustration.jpg" alt="Frustration" onerror="this.src='https://placehold.co/300x150/003366/ffffff?text=Frustration'">
+      </div>
+      <div class="ds-body">
+        <div class="ds-scope">Solutions In Me · Educational Tip Series</div>
+        <div class="ds-name">SIM Tip Series: Phases 2 &amp; 3</div>
+        <p class="ds-desc">The educational tip sub-series inside the Solutions In Me campaign. Four consecutive tip cards teaching students how to identify, frame, and develop their solutions, each using the same torn-edge motif in a new context.</p>
+        <div class="ds-tags">
+          <span class="dtag">Series Design</span>
+          <span class="dtag">Educational</span>
+          <span class="dtag">Canva</span>
+          <span class="dtag">Student Marketing</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<section id="about-strip">
+  <div class="sec-label">The Designer</div>
+  <h2 class="sec-title">How I work</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I design with a single constraint: <strong>the design must work.</strong> Not just look good in a Canva export or a Figma frame, but actually move the audience to take the action the client needs. Every visual choice, from palette to typography to composition, is made in service of that goal.</p>
+      <p>I come from a development background, which means I design with output in mind. I think about where this flyer lands, what device it gets seen on, how much time someone gives it in a scroll before they move on. That informs everything.</p>
+      <p>Most of my design work has been for <strong>campus communities and independent businesses</strong> in Lagos and Delta State. These are real clients with real audiences and zero tolerance for designs that look generic. That pressure has made me better.</p>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-row">
+        <div class="tool-name">Canva</div>
+        <div class="tool-use">Campaigns, social media, print</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">Adobe Illustrator</div>
+        <div class="tool-use">Product ads, vector identity</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">Figma</div>
+        <div class="tool-use">UI design, prototyping</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">Brand Systems</div>
+        <div class="tool-use">Multi-piece visual consistency</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">Typography</div>
+        <div class="tool-use">Hierarchy, pairing, impact</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-label">Get In Touch</div>
+  <h2 class="cta-heading">Let's build<br>something <em>real.</em></h2>
+  <p class="cta-sub">Open for graphic design projects, SIWES placement, and freelance work.<br>Fast turnaround. No generic AI output.</p>
+  <div class="cta-btns">
+    <a href="mailto:preciousobinna260@gmail.com" class="btn-primary">Send a Message</a>
+    <a href="https://obinna18.github.io" class="btn-secondary-inv">See Full Portfolio</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">OE<em>.</em></div>
+  <div class="footer-links">
+    <a href="https://obinna18.github.io">Portfolio</a>
+    <a href="https://github.com/obinna18">GitHub</a>
+    <a href="https://linkedin.com/in/obinnaegenti">LinkedIn</a>
+    <a href="mailto:preciousobinna260@gmail.com">Email</a>
+  </div>
+  <div class="footer-copy">Obinna Egenti &copy; 2025</div>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     SIDE PANELS
+══════════════════════════════════════════ -->
+
+<!-- SIM PANEL (Main) -->
+<div class="side-panel" id="panel-sim">
+  <div class="panel-inner">
+    <button class="panel-back" onclick="closePanel()">← Back</button>
+    <div class="panel-lbl">Solutions In Me · FUPRE Edition · Volunteer Designer</div>
+    <div class="panel-title">Solutions In Me Campaign</div>
+    <div class="panel-stats">
+      <div>
+        <div class="ps-num">9</div>
+        <div class="ps-lbl">Flyers Designed</div>
+      </div>
+      <div>
+        <div class="ps-num">4</div>
+        <div class="ps-lbl">Campaign Phases</div>
+      </div>
+      <div>
+        <div class="ps-num">&#x20A6;<span>45k</span></div>
+        <div class="ps-lbl">Prize Pool Announced</div>
+      </div>
+    </div>
+    <div class="panel-h3">The Brief</div>
+    <p class="panel-p">Solutions In Me is a student innovation challenge run at FUPRE, sponsored by Aliva Tech and Gadgets. Students are challenged to identify real problems in campus and daily life, design practical solutions, and compete for a prize pool of ₦45,000. I served as volunteer graphic designer across all four phases of the campaign.</p>
+    <div class="panel-h3">Design Challenge</div>
+    <p class="panel-p"><strong>The problem:</strong> A teaser post, an educational tip series, a crowd-building phase, and a submission announcement all need to feel like one campaign, yet serve completely different communication goals with very different information densities. Getting that right across 9 pieces produced over several weeks without the brand drifting is a real constraint.</p>
+    <p class="panel-p"><strong>Solution:</strong> The torn-edge navy banner motif. It runs through every single piece, creating a two-zone composition: primary messaging in the banner zone, supporting information in the white space above and below. The banner made every piece instantly recognisable as Solutions In Me content regardless of what type of flyer it was.</p>
+    <div class="panel-h3">Brand System</div>
+    <p class="panel-p"><strong>Deep Navy #003366</strong> as the dominant background. Authority, institutional seriousness, premium feel that separated this campaign from typical campus gradients and stock imagery. <strong>Bright Orange #FF6600</strong> for the ME wordmark, numbered steps, section labels, and sponsor elements. The high contrast between navy and orange ensures key information lands even at thumbnail size in an Instagram grid.</p>
+    <div class="panel-h3">The Work</div>
+    <div class="cs-panel-grid">
+      <div class="cpi wide"><img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-cover.jpg" alt="SIM Cover" onerror="this.src='https://placehold.co/600x400/003366/ffffff?text=SIM+Cover'"></div>
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-identify.jpg" alt="Identify a Problem" onerror="this.src='https://placehold.co/300x300/FF6600/ffffff?text=Identify'"></div>
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-submission.jpg" alt="Submission Open" onerror="this.src='https://placehold.co/300x300/003366/ffffff?text=Submission'"></div>
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-crowd.jpg" alt="Build the Crowd" onerror="this.src='https://placehold.co/300x300/1a3a6e/ffffff?text=Crowd'"></div>
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-complaints.jpg" alt="Complaints" onerror="this.src='https://placehold.co/300x300/FF6600/1a1a1a?text=Complaints'"></div>
+    </div>
+    <div class="panel-tags">
+      <span class="ptag">Campaign Design</span>
+      <span class="ptag">Multi-Phase</span>
+      <span class="ptag">Brand System</span>
+      <span class="ptag">Canva</span>
+      <span class="ptag">Student Marketing</span>
+      <span class="ptag">Volunteer</span>
+      <span class="ptag">FUPRE</span>
+    </div>
+  </div>
+</div>
+
+<!-- SIM2 PANEL (Tip Series) -->
+<div class="side-panel" id="panel-sim2">
+  <div class="panel-inner">
+    <button class="panel-back" onclick="closePanel()">← Back</button>
+    <div class="panel-lbl">Solutions In Me · Educational Tip Series</div>
+    <div class="panel-title">SIM Tip Series</div>
+    <div class="panel-h3">What This Is</div>
+    <p class="panel-p">The educational content sub-series inside the main Solutions In Me campaign. Four consecutive tip cards teaching FUPRE students how to identify a problem worth solving, how to frame frustrations as product ideas, how to look around for solutions others have missed, and how to think like an innovator.</p>
+    <p class="panel-p">Each card uses the same torn-edge navy motif adapted to a new context, maintaining brand consistency while differentiating the message type from announcement flyers.</p>
+    <div class="panel-h3">The Work</div>
+    <div class="cs-panel-grid">
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-innovator.jpg" alt="Think Like an Innovator" onerror="this.src='https://placehold.co/300x300/003366/FF6600?text=Innovator'"></div>
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-anticipate.jpg" alt="Anticipate" onerror="this.src='https://placehold.co/300x300/FF6600/ffffff?text=Anticipate'"></div>
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-frustration.jpg" alt="Frustration to Solution" onerror="this.src='https://placehold.co/300x300/003366/ffffff?text=Frustration'"></div>
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/sim-look-around.jpg" alt="Look Around" onerror="this.src='https://placehold.co/300x300/1a3a6e/ffffff?text=Look+Around'"></div>
+    </div>
+    <div class="panel-tags">
+      <span class="ptag">Series Design</span>
+      <span class="ptag">Educational Content</span>
+      <span class="ptag">Canva</span>
+      <span class="ptag">Student Marketing</span>
+    </div>
+  </div>
+</div>
+
+<!-- DLCF PANEL -->
+<div class="side-panel" id="panel-dlcf">
+  <div class="panel-inner">
+    <button class="panel-back" onclick="closePanel()">← Back</button>
+    <div class="panel-lbl">DLCF FUPRE · Academic Unit Designer</div>
+    <div class="panel-title">DLCF Design System</div>
+    <div class="panel-h3">The Brief</div>
+    <p class="panel-p">DLCF FUPRE needed consistent, well-designed social media content to keep students engaged academically, especially during high-pressure exam seasons. The audience: undergraduates who needed motivation without feeling lectured.</p>
+    <div class="panel-h3">Design Challenge</div>
+    <p class="panel-p"><strong>Problem:</strong> Generic motivational posts get scrolled past. Students needed content that felt real, specific to campus life, and visually sharp enough to share. <strong>Approach:</strong> A recurring content system with four distinct visual formats, each with its own identity while remaining unmistakably the same brand.</p>
+    <div class="panel-h3">The Work</div>
+    <div class="cs-panel-grid">
+      <div class="cpi wide"><img src="https://raw.githubusercontent.com/obinna18/Design/main/dlcf-stay-grounded.jpg" alt="Stay Grounded" onerror="this.src='https://placehold.co/600x350/1a1a2e/e94b13?text=Stay+Grounded'"></div>
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/dlcf-before-class-checklist%20(1).jpg" alt="Before Class Checklist" onerror="this.src='https://placehold.co/300x300/f59e0b/1a1a1a?text=Checklist'"></div>
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/dlcf-academic-faq.jpg" alt="Academic FAQ" onerror="this.src='https://placehold.co/300x300/fbbf24/1a1a1a?text=FAQ'"></div>
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/dlcf-quote1.jpg" alt="Quote Series Vol 1" onerror="this.src='https://placehold.co/300x300/1a1a2e/ffffff?text=Quote+Vol1'"></div>
+      <div class="cpi"><img src="https://raw.githubusercontent.com/obinna18/Design/main/dlcf-quote2.jpg" alt="Quote Series Vol 2" onerror="this.src='https://placehold.co/300x300/2d3a4e/ffffff?text=Quote+Vol2'"></div>
+    </div>
+    <div class="panel-h3">Pieces</div>
+    <p class="panel-p"><strong>Stay Grounded Campaign:</strong> Bold typographic design with orange and navy identity, built for Instagram shareability during exam pressure periods.</p>
+    <p class="panel-p"><strong>Before-Class Checklist:</strong> Tilted notepad motif infographic, part of the recurring #Dailyacademictips series to encourage student preparation.</p>
+    <p class="panel-p"><strong>Academic FAQ Series:</strong> Conversational Q&amp;A with yellow pill labels: non-preachy, answering real objections students use to justify skipping class.</p>
+    <p class="panel-p"><strong>Quote Series (Vol. 1 &amp; 2):</strong> Frosted glass cards on study-desk backgrounds with keyword highlights. Instantly identifiable in a student's feed.</p>
+    <div class="panel-tags">
+      <span class="ptag">Social Media</span>
+      <span class="ptag">Campaign Design</span>
+      <span class="ptag">Infographic</span>
+      <span class="ptag">Canva</span>
+    </div>
+  </div>
+</div>
+
+<!-- DSN PANEL -->
+<div class="side-panel" id="panel-dsn">
+  <div class="panel-inner">
+    <button class="panel-back" onclick="closePanel()">← Back</button>
+    <div class="panel-lbl">DSN FUPRE · Chapter Lead</div>
+    <div class="panel-title">DSN Holiday Campaign</div>
+    <div class="panel-h3">The Brief</div>
+    <p class="panel-p">As Chapter Lead of the Data Scientists Network at FUPRE, I needed to design visuals that would attract new members, communicate what DSN does, and keep the community active during semester breaks when student engagement typically drops.</p>
+    <div class="panel-h3">Design Challenge</div>
+    <p class="panel-p"><strong>Problem:</strong> Students disengage from tech communities during breaks. Recruitment visuals need to be bold enough to stop the scroll and clear enough to drive a single action: join the WhatsApp group. <strong>Solution:</strong> Nigeria's green-white palette mixed with tech iconography to signal credibility. QR code CTA linked directly to WhatsApp for trackable, frictionless onboarding.</p>
+    <div class="panel-h3">The Work</div>
+    <div class="cs-panel-grid">
+      <div class="cpi solo"><img src="https://raw.githubusercontent.com/obinna18/Design/main/dsn-harness-the-holiday.webp" alt="Harness the Holiday" onerror="this.src='https://placehold.co/600x400/006400/ffffff?text=Harness+the+Holiday'"></div>
+    </div>
+    <p class="panel-p"><strong>Holiday Skill-Up Campaign:</strong> Vibrant flyer designed to keep the DSN community active during semester breaks. Tech iconography, green-white national palette, and a direct QR code CTA that drove WhatsApp group joins and enabled trackable chapter growth.</p>
+    <div class="panel-tags">
+      <span class="ptag">Canva</span>
+      <span class="ptag">Campaign Design</span>
+      <span class="ptag">Recruitment</span>
+      <span class="ptag">Community Growth</span>
+    </div>
+  </div>
+</div>
+
+<!-- AEROPURE PANEL -->
+<div class="side-panel" id="panel-aeropure">
+  <div class="panel-inner">
+    <button class="panel-back" onclick="closePanel()">← Back</button>
+    <div class="panel-lbl">Freelance · Independent Client</div>
+    <div class="panel-title">AeroPure Mini Launch Ad</div>
+    <div class="panel-h3">The Brief</div>
+    <p class="panel-p">A smart air purifier needed a single-frame product ad that communicates features, quality, and urgency without overwhelming the viewer. Target format: Instagram and print.</p>
+    <div class="panel-h3">Design Decisions</div>
+    <p class="panel-p"><strong>Palette:</strong> Teal and mint to evoke cleanliness, breathability, and health. The cool tones signal air quality immediately before anyone reads the headline. <strong>Layout:</strong> Three-column feature callouts arranged symmetrically around the hero product shot. Lung illustration overlay creates immediate visual communication of the product's purpose. <strong>CTA:</strong> Urgency framing with deadline pressure, designed to drive a click or DM on Instagram.</p>
+    <div class="panel-h3">The Work</div>
+    <div class="cs-panel-grid">
+      <div class="cpi solo"><img src="https://raw.githubusercontent.com/obinna18/Design/main/aeropure-mini-launch-ad.jpg" alt="AeroPure Mini Launch Ad" onerror="this.src='https://placehold.co/600x400/0d9488/ffffff?text=AeroPure+Mini+Ad'"></div>
+    </div>
+    <div class="panel-tags">
+      <span class="ptag">Product Advertising</span>
+      <span class="ptag">Adobe Illustrator</span>
+      <span class="ptag">Print Design</span>
+      <span class="ptag">Instagram</span>
+    </div>
+  </div>
+</div>
+
+<!-- VINA PANEL -->
+<div class="side-panel" id="panel-vina">
+  <div class="panel-inner">
+    <button class="panel-back" onclick="closePanel()">← Back</button>
+    <div class="panel-lbl">Freelance · Lagos Beauty Studio</div>
+    <div class="panel-title">Vina Beauté Brand Flyer</div>
+    <div class="panel-h3">The Brief</div>
+    <p class="panel-p">A Victoria Island beauty studio needed a launch flyer that positions them as premium and aspirational while staying warm and inviting. Distribution channels: Instagram and WhatsApp.</p>
+    <div class="panel-h3">Design Decisions</div>
+    <p class="panel-p"><strong>Palette:</strong> Warm gold and rose tones that communicate luxury without coldness. The warmth makes the brand approachable for a beauty audience while the gold creates the aspirational positioning the client needed. <strong>Typography:</strong> Bold serif display type for the brand name communicates premium quality immediately. Serifs in beauty branding signal heritage and confidence. <strong>Composition:</strong> High-impact model photograph occupying the majority of the frame. Frosted glass overlay for the service listing keeps it readable without obscuring the photography. The composition is built for a single scroll stop: see the image, read the name, know what they do.</p>
+    <div class="panel-h3">The Work</div>
+    <div class="cs-panel-grid">
+      <div class="cpi solo"><img src="https://raw.githubusercontent.com/obinna18/Design/main/vina-beaute%20(1).webp" alt="Vina Beauté Brand Flyer" onerror="this.src='https://placehold.co/600x400/c9a96e/1a1a1a?text=Vina+Beauté'"></div>
+    </div>
+    <div class="panel-tags">
+      <span class="ptag">Brand Identity</span>
+      <span class="ptag">Canva</span>
+      <span class="ptag">Beauty</span>
+      <span class="ptag">Lagos</span>
+      <span class="ptag">Instagram</span>
+      <span class="ptag">WhatsApp</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script>
+// ─── NAV SCROLL ───
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ─── THEME ───
+const saved = localStorage.getItem('oe-theme') || 'light';
+document.documentElement.setAttribute('data-theme', saved);
+document.getElementById('themeBtn').textContent = saved === 'dark' ? 'Light' : 'Dark';
+function toggleTheme(){
+  const curr = document.documentElement.getAttribute('data-theme');
+  const next = curr === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('oe-theme', next);
+  document.getElementById('themeBtn').textContent = next === 'dark' ? 'Light' : 'Dark';
+}
+
+// ─── MOBILE MENU ───
+function toggleMob(){
+  const ham = document.getElementById('ham');
+  const mob = document.getElementById('mobMenu');
+  ham.classList.toggle('open');
+  mob.classList.toggle('open');
+}
+
+// ─── FILTER TABS ───
+function filterWork(cat, btn){
+  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ds-card').forEach(card=>{
+    if(cat==='all'){
+      card.style.display='';
+    } else {
+      const cats = (card.dataset.cat||'').split(' ');
+      card.style.display = cats.includes(cat) ? '' : 'none';
+    }
+  });
+}
+
+// ─── PANELS ───
+let activePanel = null;
+function openPanel(id){
+  closePanel();
+  const panel = document.getElementById('panel-'+id);
+  const overlay = document.getElementById('overlay');
+  if(!panel) return;
+  panel.classList.add('open');
+  overlay.classList.add('active');
+  document.body.style.overflow='hidden';
+  activePanel = panel;
+}
+function closePanel(){
+  if(activePanel){
+    activePanel.classList.remove('open');
+    activePanel = null;
+  }
+  document.getElementById('overlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closePanel(); });
+
+// ─── REVEAL ON SCROLL ───
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
