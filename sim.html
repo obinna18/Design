@@ -14,6 +14,7 @@
     <a href="https://obinna18.github.io" class="nav-link hide-mob">← Full Portfolio</a>
     <a href="index.html" class="nav-link">← Design Portfolio</a>
     <a href="mailto:preciousobinna260@gmail.com" class="nav-hire">Hire Me</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle dark/light mode">🌙</button>
   </div>
 </nav>
 
@@ -140,16 +141,16 @@
       <div class="cs-block" id="phases">
         <div class="cs-block-title">Campaign <em>Phases</em></div>
 
-        <p class="cs-p" style="font-size:.82rem;font-weight:700;color:#ddd;margin-bottom:4px;">Phase 1: Teaser (1 flyer)</p>
+        <p class="cs-p" style="font-size:.82rem;font-weight:700;color:var(--swatch-name-color);margin-bottom:4px;">Phase 1: Teaser (1 flyer)</p>
         <p class="cs-p">Full-bleed navy. No information, no deadline, no CTA. Just the wordmark and one script-font word: "Anticipate..." The goal was pure curiosity. Restraint creates more curiosity than information does. Students who saw this flyer had no idea what was coming — that uncertainty is the entire point of a teaser.</p>
 
-        <p class="cs-p" style="font-size:.82rem;font-weight:700;color:#ddd;margin-bottom:4px;">Phase 2: Educational Tip Series (5 flyers)</p>
+        <p class="cs-p" style="font-size:.82rem;font-weight:700;color:var(--swatch-name-color);margin-bottom:4px;">Phase 2: Educational Tip Series (5 flyers)</p>
         <p class="cs-p">A parent card ("How to Identify a Problem") followed by four numbered method cards: Look Around You, Listen to Complaints, Spot Frustration, Check the Crowd. The oversized number at the base of each card (1, 2, 3, 4) was the most deliberate single decision in the series. On Instagram, a large number at the base of a card signals: there is a series and this is where it starts. It primes the viewer to look for the next one.</p>
 
-        <p class="cs-p" style="font-size:.82rem;font-weight:700;color:#ddd;margin-bottom:4px;">Phase 3: Event Announcement (1 flyer)</p>
+        <p class="cs-p" style="font-size:.82rem;font-weight:700;color:var(--swatch-name-color);margin-bottom:4px;">Phase 3: Event Announcement (1 flyer)</p>
         <p class="cs-p">Light background signals a content shift — this is no longer educational content, it is a call to action. The campaign logo comes to the foreground. Functions as a reset and a reveal: all the tips were building toward this specific event.</p>
 
-        <p class="cs-p" style="font-size:.82rem;font-weight:700;color:#ddd;margin-bottom:4px;">Phase 4: Submission Open (1 flyer)</p>
+        <p class="cs-p" style="font-size:.82rem;font-weight:700;color:var(--swatch-name-color);margin-bottom:4px;">Phase 4: Submission Open (1 flyer)</p>
         <p class="cs-p">The densest information piece in the campaign. Five categories: how to submit, what your solution must be, the selection process, the deadline, and the prize amount. Two-column card layout with clearly labelled sections. The deadline was pulled out in orange bold at the bottom — it is the single piece of information that determines whether a student acts or loses the opportunity.</p>
 
         <div class="img-gallery">
@@ -196,7 +197,7 @@
         </div>
       </div>
 
-      <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:32px;border-top:1px solid #1e1e1e;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:32px;border-top:1px solid var(--border-nav);">
         <a href="index.html" class="btn-ghost">← All Projects</a>
         <a href="dlcf.html" class="btn-orange">Next Project →</a>
       </div>
@@ -233,6 +234,19 @@ window.addEventListener('scroll',function(){
     }
   });
 });
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById('themeToggle');
+  var stored = localStorage.getItem('theme');
+  if(stored === 'dark'){ document.body.classList.add('dark'); btn.textContent = '☀️'; }
+  btn.addEventListener('click', function(){
+    var isDark = document.body.classList.toggle('dark');
+    btn.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+})();
 </script>
 </body>
 </html>

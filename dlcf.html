@@ -14,6 +14,7 @@
     <a href="https://obinna18.github.io" class="nav-link hide-mob">← Full Portfolio</a>
     <a href="index.html" class="nav-link">← Design Portfolio</a>
     <a href="mailto:preciousobinna260@gmail.com" class="nav-hire">Hire Me</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle dark/light mode">🌙</button>
   </div>
 </nav>
 
@@ -123,16 +124,16 @@
       <div class="cs-block" id="pieces">
         <div class="cs-block-title">The <em>5 Pieces</em></div>
 
-        <p class="cs-p" style="font-weight:700;color:#ddd;margin-bottom:6px;">1. Stay Grounded Campaign</p>
+        <p class="cs-p" style="font-weight:700;color:var(--swatch-name-color);margin-bottom:6px;">1. Stay Grounded Campaign</p>
         <p class="cs-p">Mid-semester drift is a real and universal experience for FUPRE students — the point where early-semester discipline breaks down. This design acknowledged that reality directly rather than offering generic encouragement. Bold typographic layout, orange and midnight navy identity, built for Instagram shareability. Large display type that reads clearly at thumbnail size before the viewer decides to tap.</p>
 
-        <p class="cs-p" style="font-weight:700;color:#ddd;margin-bottom:6px;">2. Before-Class Checklist</p>
+        <p class="cs-p" style="font-weight:700;color:var(--swatch-name-color);margin-bottom:6px;">2. Before-Class Checklist</p>
         <p class="cs-p">Part of the recurring #Dailyacademictips series. Tilted notepad motif that mimicked the visual logic of a real checklist — items spaced for readability, hierarchy clear — so it functioned as a genuine tool. Students who screenshotted this had something actionable before their next lecture, not just a feeling.</p>
 
-        <p class="cs-p" style="font-weight:700;color:#ddd;margin-bottom:6px;">3. Academic FAQ Series</p>
+        <p class="cs-p" style="font-weight:700;color:var(--swatch-name-color);margin-bottom:6px;">3. Academic FAQ Series</p>
         <p class="cs-p">Converted recurring student questions into shareable designed cards. Conversational Q&amp;A with yellow pill-label question formatting. Each card in the series was immediately recognisable as belonging to the same source. A student who shares one card is distributing the unit's brand without knowing it.</p>
 
-        <p class="cs-p" style="font-weight:700;color:#ddd;margin-bottom:6px;">4 &amp; 5. Quote Series (Vol. 1 &amp; 2)</p>
+        <p class="cs-p" style="font-weight:700;color:var(--swatch-name-color);margin-bottom:6px;">4 &amp; 5. Quote Series (Vol. 1 &amp; 2)</p>
         <p class="cs-p">Frosted glass cards on study-desk photography backgrounds. Keyword highlights in the quote text create visual anchors for the key message. Designed to be saved and shared — the measurement for a quote card is saves, not likes. The frosted card treatment created visual depth without competing with the quote.</p>
 
         <div class="img-gallery">
@@ -166,7 +167,7 @@
         </div>
       </div>
 
-      <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:32px;border-top:1px solid #1e1e1e;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:32px;border-top:1px solid var(--border-nav);">
         <a href="sim.html" class="btn-ghost">← Solutions In Me</a>
         <a href="dsn.html" class="btn-orange">Next: DSN →</a>
       </div>
@@ -189,6 +190,19 @@
 function dl(url,name){var a=document.createElement('a');a.href=url;a.download=name||'design.jpg';a.target='_blank';document.body.appendChild(a);a.click();document.body.removeChild(a);}
 var blocks=document.querySelectorAll('.cs-block');var links=document.querySelectorAll('.cs-nav a');
 window.addEventListener('scroll',function(){var pos=window.scrollY+100;blocks.forEach(function(b){if(b.offsetTop<=pos&&b.offsetTop+b.offsetHeight>pos){links.forEach(function(l){l.classList.remove('active')});var active=document.querySelector('.cs-nav a[href="#'+b.id+'"]');if(active)active.classList.add('active');}});});
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById('themeToggle');
+  var stored = localStorage.getItem('theme');
+  if(stored === 'dark'){ document.body.classList.add('dark'); btn.textContent = '☀️'; }
+  btn.addEventListener('click', function(){
+    var isDark = document.body.classList.toggle('dark');
+    btn.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+})();
 </script>
 </body>
 </html>
